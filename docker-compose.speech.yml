@@ -1,8 +1,6 @@
-version: "3.8"
-
 services:
   homeassistant-mcp:
-    image: ${MCP_IMAGE:-jango-blockchained/homeassistant-mcp:latest}
+    image: ${MCP_IMAGE:-ghcr.io/jango-blockchained/advanced-homeassistant-mcp:latest}
     # Microphone and audio device permissions
     devices:
       - /dev/snd:/dev/snd
