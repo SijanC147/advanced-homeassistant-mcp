@@ -19,9 +19,11 @@ RUN bun run build && bun run build:stdio && bun run build:http
 FROM oven/bun:1-slim as runner
 
 # Install only the system deps we actually need at runtime
-# (curl for HEALTHCHECK; no Python/audio — those belong in docker-compose.speech.yml)
+# (curl for HEALTHCHECK, ffmpeg and psmisc for speech features)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
+    ffmpeg \
+    psmisc \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user. The oven/bun base image is

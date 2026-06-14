@@ -16,6 +16,10 @@ services:
       - ENABLE_WAKE_WORD=${ENABLE_WAKE_WORD:-true}
       - ENABLE_SPEECH_TO_TEXT=${ENABLE_SPEECH_TO_TEXT:-true}
 
+      # Service Hosts
+      - WHISPER_HOST=fast-whisper
+      - WYOMING_HOST=wake-word
+
       # Audio Configuration
       - NOISE_THRESHOLD=${NOISE_THRESHOLD:-0.05}
       - MIN_SPEECH_DURATION=${MIN_SPEECH_DURATION:-1.0}
@@ -53,21 +57,12 @@ services:
   wake-word:
     image: rhasspy/wyoming-openwakeword:latest
     restart: unless-stopped
-    devices:
-      - /dev/snd:/dev/snd
-    volumes:
-      - /run/user/1000/pulse/native:/run/user/1000/pulse/native
     environment:
-      - PULSE_SERVER=${PULSE_SERVER:-unix:/run/user/1000/pulse/native}
-      - PULSE_COOKIE=/run/user/1000/pulse/cookie
       - PYTHONUNBUFFERED=1
       - OPENWAKEWORD_MODEL=hey_jarvis
       - OPENWAKEWORD_THRESHOLD=0.5
-      - MICROPHONE_COMMAND=arecord -D hw:0,0 -f S16_LE -c 1 -r 16000 -t raw
-    group_add:
-      - "${AUDIO_GID:-29}"
-    network_mode: host
-    privileged: true
+    ports:
+      - "10400:10400"
     healthcheck:
       test: ["CMD-SHELL", "nc -z localhost 10400 || exit 1"]
       interval: 30s

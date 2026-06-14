@@ -9,10 +9,10 @@ export class WakeWordDetector extends EventEmitter implements IWakeWordDetector 
   private wyomingHost: string;
   private wyomingPort: number;
 
-  constructor(host: string = "localhost", port: number = 10400) {
+  constructor(host?: string, port?: number) {
     super();
-    this.wyomingHost = host;
-    this.wyomingPort = port;
+    this.wyomingHost = host ?? process.env.WYOMING_HOST ?? "localhost";
+    this.wyomingPort = port ?? parseInt(process.env.WYOMING_PORT ?? "10400", 10);
   }
 
   public async initialize(): Promise<void> {
