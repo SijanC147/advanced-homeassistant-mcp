@@ -40,8 +40,6 @@ export class TranscriptionError extends Error {
 export class SpeechToText extends EventEmitter implements ISpeechToText {
   private containerName: string;
   private audioWatcher?: ReturnType<typeof watch>;
-  private modelPath: string;
-  private modelType: string;
   private isInitialized: boolean = false;
   private whisperHost: string;
   private whisperPort: number;
@@ -49,8 +47,6 @@ export class SpeechToText extends EventEmitter implements ISpeechToText {
   constructor(config: SpeechToTextConfig) {
     super();
     this.containerName = config.containerName ?? "fast-whisper";
-    this.modelPath = config.modelPath;
-    this.modelType = config.modelType;
     this.whisperHost = process.env.WHISPER_HOST ?? "localhost";
     this.whisperPort = parseInt(process.env.WHISPER_PORT ?? "9000", 10);
   }

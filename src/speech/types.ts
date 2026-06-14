@@ -14,7 +14,5 @@ export interface ISpeechToText extends EventEmitter {
 }
 
 export interface SpeechToTextConfig {
-  modelPath: string;
-  modelType: string;
   containerName?: string;
 }

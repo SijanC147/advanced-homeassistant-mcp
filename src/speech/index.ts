@@ -53,10 +53,7 @@ class SpeechService {
         logger.info("Initializing speech-to-text...");
         // Dynamic import to avoid loading the module if not needed
         const { SpeechToText } = await import("./speechToText.js");
-        this.speechToText = new SpeechToText({
-          modelPath: APP_CONFIG.SPEECH.WHISPER_MODEL_PATH,
-          modelType: APP_CONFIG.SPEECH.WHISPER_MODEL_TYPE,
-        }) as ISpeechToText;
+        this.speechToText = new SpeechToText({}) as ISpeechToText;
         await this.speechToText.initialize();
 
         // Wire speech-to-text events
